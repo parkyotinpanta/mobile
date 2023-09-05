@@ -1,28 +1,45 @@
 const knex = require('../DATA/DataKnex')
-// const รับค่า มาจากดาต้าเบส 
+const service = require('../models/service.mobile')
+const createError = require('http-errors')
+
+
 
 module.exports = {
-    select: async (req, res) => {
-        const MyphoneRaed = await knex.select().from('phone')
-        res.send(MyphoneRaed)
-
+    select: async (req, res, next) => {
+        try {
+            const MyphoneRaed = await service.select(req)
+            res.send(MyphoneRaed)
+        } catch (error) {
+            console.log(error)
+            next(createError.InternalServerError())
+        }
     },
-    insert: async (req, res) => {
-        const MyphoneInsert = await knex('phone').insert(req.body)
-        res.send(MyphoneInsert)
-
+    insert: async (req, res, next) => {
+        try {
+            const MyphoneInsert = await service.insert(req)
+            res.send(MyphoneInsert)
+        } catch {
+            console.log(error)
+            next(createError.InternalServerError)
+        }
     },
-    updete: async (req, res) => {
-        const id = req.params.id
-        const MyphoneUpdete = await knex('phone').where({ id }).updete(req.body)
-        res.send({ MyphoneUpdete })
-
+    updete: async (req, res, next) => {
+        try {
+            const MyphoneUpdete = await service.updete(req)
+            res.send({ MyphoneUpdete })
+        } catch {
+            console.log(error)
+            next(createError.InternalServerError)
+        }
     },
-    delete: async (req, res) => {
-        const id = req.params.id
-        const Myphonedelete = await knex('phone').where({ id }).delete()
-        res.send({ Myphonedelete })
-
+    delete: async (req, res, next) => {
+        try {
+            const Myphonedelete = await service.delete(req)
+            res.send({ Myphonedelete })
+        } catch {
+            console.log(error)
+            next(createError.InternalServerError)
+        }
     },
 
 

@@ -5,7 +5,7 @@ const phonecontroller = require('../controllers/phone.controllers')
 
 
 
-router.get('/read', phonecontroller.select)
+router.get('/phone', phonecontroller.select)
 router.post('/create', phonecontroller.insert)
 router.put('/:id', phonecontroller.updete)
 router.delete('/:id', phonecontroller.delete)
